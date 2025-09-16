@@ -31,7 +31,7 @@ export function Configurator() {
     },
   }
 
-  // Логика расчета
+  // Логика расчета стоимости
   useEffect(() => {
     let cost = 0
     try {
