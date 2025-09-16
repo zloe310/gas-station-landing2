@@ -5,14 +5,18 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 
+type ModelType = 'Luxar' | 'Nuvola' | 'NuvolaS'
+type HoseCountType = '1' | '2'
+type BodyMaterialType = 'painted' | 'stainless'
+
 export function Configurator() {
-  const [model, setModel] = useState('NuvolaS')
-  const [hoseCount, setHoseCount] = useState('1')
-  const [bodyMaterial, setBodyMaterial] = useState('painted')
+  const [model, setModel] = useState<ModelType>('NuvolaS')
+  const [hoseCount, setHoseCount] = useState<HoseCountType>('1')
+  const [bodyMaterial, setBodyMaterial] = useState<BodyMaterialType>('painted')
   const [estimatedCost, setEstimatedCost] = useState(0)
 
   // Прайс-лист на основе предоставленного файла
-  const prices = {
+  const prices: Record<ModelType, Record<HoseCountType, Record<BodyMaterialType, number>>> = {
     Luxar: {
       '1': { painted: 617000, stainless: 701000 },
       '2': { painted: 1035000, stainless: 1122000 },
