@@ -6,6 +6,11 @@ import { Phone, Mail, MapPin } from "lucide-react"
 export function SiteFooter() {
   return (
     <Footer
+      logo={
+        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+          <span className="text-primary-foreground font-bold text-sm">CSA</span>
+        </div>
+      }
       brandName="ООО «МАСТЕР НПТ» - Официальный дистрибьютор CSA в России"
       socialLinks={[
         {
