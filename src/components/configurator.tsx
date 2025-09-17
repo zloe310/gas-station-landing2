@@ -35,7 +35,13 @@ export function Configurator() {
   useEffect(() => {
     let cost = 0
     try {
-      cost = prices[model][hoseCount][bodyMaterial]
+      const modelPrices = prices[model]
+      if (modelPrices) {
+        const hosePrices = modelPrices[hoseCount]
+        if (hosePrices) {
+          cost = hosePrices[bodyMaterial] || 0
+        }
+      }
     } catch (error) {
       console.error("Error calculating price for selection:", { model, hoseCount, bodyMaterial })
       cost = 0
