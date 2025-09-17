@@ -49,15 +49,15 @@ export function ProductsSection() {
                 {/* Content */}
                 <div className="relative z-10 p-6 flex flex-col h-full">
                   {/* Header */}
-                  <div className="flex-shrink-0 pb-4 text-center">
-                    <h3 className="text-2xl font-bold text-primary mb-3">{product.title.split(':')[0]}</h3>
-                    <p className="text-lg text-white mb-2 font-semibold">{product.title.split(':')[1]}</p>
-                    <p className="text-base text-muted-foreground leading-relaxed">{product.description}</p>
+                  <div className="flex-shrink-0 pb-3 text-center">
+                    <h3 className="text-xl font-bold text-primary mb-2">{product.title.split(':')[0]}</h3>
+                    <p className="text-base text-white mb-2 font-semibold">{product.title.split(':')[1]}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{product.description}</p>
                   </div>
 
                   {/* Photo */}
-                  <div className="flex-shrink-0 mb-6">
-                    <AspectRatio ratio={4 / 3} className="overflow-hidden rounded-xl">
+                  <div className="flex-shrink-0 mb-4">
+                    <AspectRatio ratio={3 / 2} className="overflow-hidden rounded-xl">
                       <img 
                         src={`/products/${product.id}.png`}
                         alt={`Газораздаточная колонка ${product.title.split(':')[0]}`}
@@ -79,6 +79,20 @@ export function ProductsSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Дополнительная информация */}
+        <div className="mt-12">
+          <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 text-center">
+            <div className="w-full">
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                Гибкие решения интеграции
+              </h3>
+              <p className="text-base text-muted-foreground leading-relaxed break-words">
+                ГТРК могут быть поставлены с любым протоколом обмена для работы с АСУТП, а так же в решении для сепаратной работы
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

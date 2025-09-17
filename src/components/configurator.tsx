@@ -8,18 +8,20 @@ import { Button } from "@/components/ui/button"
 type ModelType = 'Luxar' | 'Nuvola' | 'NuvolaS'
 type HoseCountType = '1' | '2'
 type BodyMaterialType = 'painted' | 'stainless'
+type MeasuringDeviceType = 'mechanical' | 'coriolis'
 
 export function Configurator() {
   const [model, setModel] = useState<ModelType>('NuvolaS')
   const [hoseCount, setHoseCount] = useState<HoseCountType>('1')
   const [bodyMaterial, setBodyMaterial] = useState<BodyMaterialType>('painted')
+  const [measuringDevice, setMeasuringDevice] = useState<MeasuringDeviceType>('mechanical')
   const [estimatedCost, setEstimatedCost] = useState(0)
 
   // Прайс-лист на основе предоставленного файла
   const prices: Record<ModelType, Record<HoseCountType, Record<BodyMaterialType, number>>> = {
     Luxar: {
       '1': { painted: 617000, stainless: 701000 },
-      '2': { painted: 1035000, stainless: 1122000 },
+      '2': { painted: 969000, stainless: 1077000 },
     },
     Nuvola: {
       '1': { painted: 617000, stainless: 701000 },
@@ -42,12 +44,18 @@ export function Configurator() {
           cost = hosePrices[bodyMaterial] || 0
         }
       }
+      
+      // Добавляем стоимость измерительного устройства
+      if (measuringDevice === 'coriolis') {
+        const coriolisPrice = hoseCount === '1' ? 300000 : 600000
+        cost += coriolisPrice
+      }
     } catch (error) {
-      console.error("Error calculating price for selection:", { model, hoseCount, bodyMaterial })
+      console.error("Error calculating price for selection:", { model, hoseCount, bodyMaterial, measuringDevice })
       cost = 0
     }
     setEstimatedCost(cost)
-  }, [model, hoseCount, bodyMaterial])
+  }, [model, hoseCount, bodyMaterial, measuringDevice])
 
   // Функция для форматирования валюты
   const formatCurrency = (amount: number) => {
@@ -186,6 +194,33 @@ export function Configurator() {
                     }`}
                   >
                     Нержавеющая сталь
+                  </button>
+                </div>
+              </div>
+
+              {/* Измерительное устройство */}
+              <div className="space-y-3">
+                <h3 className="font-semibold text-base text-center text-foreground">Измерительное устройство</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => setMeasuringDevice('mechanical')}
+                    className={`text-center px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 border-2 cursor-pointer ${
+                      measuringDevice === 'mechanical' 
+                        ? 'bg-primary text-primary-foreground border-primary shadow-md' 
+                        : 'bg-card border-border hover:border-primary hover:bg-accent'
+                    }`}
+                  >
+                    Механический объемомер
+                  </button>
+                  <button
+                    onClick={() => setMeasuringDevice('coriolis')}
+                    className={`text-center px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 border-2 cursor-pointer ${
+                      measuringDevice === 'coriolis' 
+                        ? 'bg-primary text-primary-foreground border-primary shadow-md' 
+                        : 'bg-card border-border hover:border-primary hover:bg-accent'
+                    }`}
+                  >
+                    Массовый объемомер (Кориолис)
                   </button>
                 </div>
               </div>
