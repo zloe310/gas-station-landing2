@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
 import * as React from "react"
 
-interface GradientTextProps extends HTMLAttributes<HTMLDivElement> {
+interface GradientTextProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Array of colors for the gradient
    * @default ["#ffaa40", "#9c40ff", "#ffaa40"]
