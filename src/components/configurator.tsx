@@ -47,7 +47,7 @@ export function Configurator() {
       
       // Добавляем стоимость измерительного устройства
       if (measuringDevice === 'coriolis') {
-        const coriolisPrice = hoseCount === '1' ? 300000 : 600000
+        const coriolisPrice = hoseCount === '1' ? 500000 : 900000
         cost += coriolisPrice
       }
     } catch (error) {
