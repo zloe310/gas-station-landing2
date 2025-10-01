@@ -128,19 +128,7 @@ export function ConsultationForm() {
                 </div>
               </div>
 
-              {/* Согласие на обработку персональных данных */}
-              <div className="flex items-start gap-3">
-                <input
-                  id="consent"
-                  type="checkbox"
-                  checked={consent}
-                  onChange={(e) => setConsent(e.target.checked)}
-                  className="mt-1 h-5 w-5 cursor-pointer"
-                />
-                <label htmlFor="consent" className="text-sm text-foreground">
-                  Согласен на обработку персональных данных
-                </label>
-              </div>
+              
 
               {/* Номер телефона */}
               <div className="space-y-2">
@@ -176,6 +164,19 @@ export function ConsultationForm() {
               <Send className="w-5 h-5 mr-2" />
               Получить бесплатную консультацию
             </Button>
+            {/* Согласие на обработку персональных данных */}
+            <div className="flex items-start gap-3">
+              <input
+                id="consent"
+                type="checkbox"
+                checked={consent}
+                onChange={(e) => setConsent(e.target.checked)}
+                className="mt-1 h-5 w-5 cursor-pointer"
+              />
+              <label htmlFor="consent" className="text-sm text-foreground">
+                Согласен на обработку персональных данных
+              </label>
+            </div>
             <p className="text-xs text-muted-foreground text-center">
               Я даю согласие на обработку персональных данных в соответствии с{' '}
               <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:no-underline">политикой конфиденциальности</a>.
