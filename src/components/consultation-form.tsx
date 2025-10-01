@@ -138,8 +138,7 @@ export function ConsultationForm() {
                   className="mt-1 h-5 w-5 cursor-pointer"
                 />
                 <label htmlFor="consent" className="text-sm text-foreground">
-                  Я даю согласие на обработку персональных данных в соответствии с
-                  {' '}<a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:no-underline">политикой конфиденциальности</a>.
+                  Согласен на обработку персональных данных
                 </label>
               </div>
 
@@ -178,7 +177,8 @@ export function ConsultationForm() {
               Получить бесплатную консультацию
             </Button>
             <p className="text-xs text-muted-foreground text-center">
-              Нажимая на кнопку, вы даете согласие на обработку персональных данных.
+              Я даю согласие на обработку персональных данных в соответствии с{' '}
+              <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:no-underline">политикой конфиденциальности</a>.
             </p>
           </CardFooter>
         </Card>
