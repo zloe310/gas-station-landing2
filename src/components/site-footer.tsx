@@ -15,17 +15,17 @@ export function SiteFooter() {
       socialLinks={[
         {
           icon: <Phone className="h-4 w-4" />,
-          href: "tel:+78001234567",
+          href: "tel:+74956444640",
           label: "Позвонить",
         },
         {
           icon: <Mail className="h-4 w-4" />,
-          href: "mailto:info@gaz-kolonki.ru",
+          href: "mailto:inf@masternpt.ru",
           label: "Написать на email",
         },
         {
           icon: <MapPin className="h-4 w-4" />,
-          href: "#contacts",
+          href: "https://yandex.ru/maps/-/CLByeFOS",
           label: "Найти на карте",
         },
       ]}
