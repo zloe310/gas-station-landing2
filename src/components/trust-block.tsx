@@ -1,10 +1,18 @@
 "use client"
 
+import type { ReactNode } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle, Shield, Award, Users } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
+
+type TrustItem = {
+  icon: LucideIcon
+  title: string
+  description: ReactNode
+}
 
 export function TrustBlock() {
-  const trustItems = [
+  const trustItems: TrustItem[] = [
     {
       icon: Shield,
       title: "Гарантия качества",
@@ -13,7 +21,18 @@ export function TrustBlock() {
     {
       icon: Award,
       title: "Опыт работы",
-      description: "Более 35 лет на рынке автозаправочных станций"
+      description: (
+        <>
+          <a
+            href="https://neftprod.ru/our-advantages/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline underline-offset-2 hover:no-underline"
+          >
+            ГК «Нефтепродукттехника»
+          </a> более 35 лет специализируется на поставках оборудования для АЗС.
+        </>
+      )
     },
     {
       icon: Users,

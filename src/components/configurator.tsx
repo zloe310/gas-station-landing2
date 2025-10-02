@@ -58,6 +58,11 @@ export function Configurator() {
   }, [model, hoseCount, bodyMaterial, measuringDevice])
 
   // Функция для форматирования валюты
+
+  const scrollToConsultationForm = () => {
+    const formSection = document.getElementById("consultation-form")
+    formSection?.scrollIntoView({ behavior: "smooth" })
+  }
   const formatCurrency = (amount: number) => {
     if (typeof amount !== 'number') return '...'
     return new Intl.NumberFormat('ru-RU', {
@@ -241,7 +246,7 @@ export function Configurator() {
           </CardContent>
 
           <CardFooter>
-            <Button className="w-full cursor-pointer" size="lg">
+            <Button onClick={scrollToConsultationForm} className="w-full cursor-pointer" size="lg">
               Получить коммерческое предложение
             </Button>
           </CardFooter>

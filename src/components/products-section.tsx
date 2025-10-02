@@ -2,25 +2,36 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Button } from "@/components/ui/button"
 
+type Product = {
+  id: string
+  title: string
+  description: string
+  buttonText: string
+  specUrl: string
+}
+
 export function ProductsSection() {
-  const products = [
+  const products: Product[] = [
     {
       id: "luxar",
       title: "Модель Luxar: Надежный стандарт",
       description: "Идеальное решение для АЗС, которым требуется эффективное и надежное оборудование с оптимальным соотношением цены и качества.",
-      buttonText: "Скачать спецификацию Luxar"
+      buttonText: "Скачать спецификацию Luxar",
+      specUrl: "/PDF/CSA_LUXAR.pdf"
     },
     {
       id: "nuvola-s",
       title: "Модель Nuvola S: Универсальность и гибкость",
       description: "Универсальная ГРК для предприятий, стремящихся к максимальной точности учета, высокой производительности и долговечности.",
-      buttonText: "Скачать спецификацию Nuvola S"
+      buttonText: "Скачать спецификацию Nuvola S",
+      specUrl: "/PDF/CSA_NUVOLA_S.pdf"
     },
     {
       id: "nuvola",
       title: "Модель Nuvola: Премиальное исполнение",
       description: "Флагманская модель для АЗС, которым требуется оборудование премиум-класса с максимальной надежностью для самых требовательных условий эксплуатации.",
-      buttonText: "Скачать спецификацию Nuvola"
+      buttonText: "Скачать спецификацию Nuvola",
+      specUrl: "/PDF/CSA_NUVOLA.pdf"
     }
   ]
 
@@ -68,11 +79,14 @@ export function ProductsSection() {
 
                   {/* Button */}
                   <div className="flex-shrink-0 mt-auto">
-                    <Button 
-                      className="w-full hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors cursor-pointer" 
+                    <Button
+                      asChild
+                      className="w-full hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors cursor-pointer"
                       variant="outline"
                     >
-                      {product.buttonText}
+                      <a href={product.specUrl} target="_blank" rel="noopener noreferrer">
+                        {product.buttonText}
+                      </a>
                     </Button>
                   </div>
                 </div>

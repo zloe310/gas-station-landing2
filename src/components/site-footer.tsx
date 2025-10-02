@@ -35,11 +35,6 @@ export function SiteFooter() {
         { href: "#configurator", label: "Конфигуратор" },
         { href: "#contacts", label: "Контакты" },
       ]}
-      legalLinks={[
-        { href: "/privacy", label: "Политика конфиденциальности" },
-        { href: "/terms", label: "Условия использования" },
-        { href: "/warranty", label: "Гарантия" },
-      ]}
       copyright={{
         text: "© 2024 Газораздаточные колонки CSA. Все права защищены.",
         license: "Официальный дистрибьютор в России",
