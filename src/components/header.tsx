@@ -60,12 +60,13 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Логотип */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-2">
-              <img 
-                src="/logo.png" 
-                alt="Газораздаточные колонки CSA" 
+            <Link href="/" className="hidden items-center gap-2 sm:flex">
+              <img
+                src="/logo.png"
+                alt="Газораздаточные колонки CSA"
                 className="h-8 w-auto"
               />
+              <span className="sr-only">Газораздаточные колонки CSA</span>
             </Link>
           </div>
 

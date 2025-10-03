@@ -250,7 +250,7 @@ export function ConsultationForm() {
               disabled={isSubmitting}
             >
               <Send className="w-5 h-5 mr-2" />
-              {isSubmitting ? "Отправляем..." : "Получить бесплатную консультацию"}
+              {isSubmitting ? "Отправляем..." : "Получить консультацию"}
             </Button>
             {submitMessage && (
               <p
