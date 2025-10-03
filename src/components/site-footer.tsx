@@ -6,6 +6,7 @@ import { Phone, Mail, MapPin } from "lucide-react"
 export function SiteFooter() {
   return (
     <Footer
+      brandDescription="Формируем дилерскую сеть и приглашаем к сотрудничеству заинтересованных лиц и организации"
       logo={
         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
           <span className="text-primary-foreground font-bold text-sm">CSA</span>
