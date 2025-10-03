@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -10,10 +10,14 @@ import { Send } from "lucide-react"
 export function ConsultationForm() {
   const [companyName, setCompanyName] = useState("")
   const [corporateEmail, setCorporateEmail] = useState("")
+  const [isEmailInvalid, setIsEmailInvalid] = useState(false)
+  const [managerName, setManagerName] = useState("")
   const [corporatePhone, setCorporatePhone] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
   const [submitMessage, setSubmitMessage] = useState("")
+
+  const formMountedAtRef = useRef<number>(Date.now())
 
   const formatPhoneNumber = (value: string) => {
     // Убираем все нецифровые символы
@@ -35,18 +39,72 @@ export function ConsultationForm() {
     setCorporatePhone(formattedValue)
   }
 
+  const isValidEmail = (value: string) => /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setCorporateEmail(value)
+    const trimmed = value.trim()
+    setIsEmailInvalid(trimmed.length > 0 && !isValidEmail(trimmed))
+  }
+
   const submitForm = async () => {
     if (isSubmitting) {
       return
     }
 
+    if (managerName.trim().length > 0) {
+      setSubmitStatus("success")
+      setSubmitMessage("Заявка отправлена. Мы свяжемся с вами в ближайшее время.")
+      setCompanyName("")
+      setCorporateEmail("")
+      setIsEmailInvalid(false)
+      setCorporatePhone("")
+      setManagerName("")
+      setIsSubmitting(false)
+      return
+    }
+
+    const timeSinceMount = Date.now() - formMountedAtRef.current
+    if (timeSinceMount < 4000) {
+      setSubmitStatus("success")
+      setSubmitMessage("Заявка отправлена. Мы свяжемся с вами в ближайшее время.")
+      setCompanyName("")
+      setCorporateEmail("")
+      setIsEmailInvalid(false)
+      setCorporatePhone("")
+      setManagerName("")
+      formMountedAtRef.current = Date.now()
+      return
+    }
+
+    formMountedAtRef.current = Date.now()
+
     const company = companyName.trim()
     const email = corporateEmail.trim()
     const phone = corporatePhone
+    const phoneDigits = phone.replace(/\D/g, "")
+    const hasEmail = email.length > 0
+    const hasPhone = phoneDigits.length > 0
+    const emailInvalid = hasEmail && !isValidEmail(email)
 
-    if (!company || !email || !phone) {
+    setIsEmailInvalid(emailInvalid)
+
+    if (!hasEmail && !hasPhone) {
       setSubmitStatus("error")
-      setSubmitMessage("Пожалуйста, заполните все поля формы.")
+      setSubmitMessage("Пожалуйста, укажите хотя бы один способ связи: email или телефон.")
+      return
+    }
+
+    if (emailInvalid) {
+      setSubmitStatus("error")
+      setSubmitMessage("Пожалуйста, введите корректный email.")
+      return
+    }
+
+    if (hasPhone && phoneDigits.length < 10) {
+      setSubmitStatus("error")
+      setSubmitMessage("Пожалуйста, укажите полный номер телефона или удалите его.")
       return
     }
 
@@ -58,7 +116,7 @@ export function ConsultationForm() {
       companyName: company,
       corporateEmail: email,
       corporatePhone: phone,
-      corporatePhoneDigits: phone.replace(/\D/g, ""),
+      corporatePhoneDigits: phoneDigits,
       submittedAt: new Date().toISOString(),
       form: "consultation",
     }
@@ -80,15 +138,18 @@ export function ConsultationForm() {
       setSubmitMessage("Заявка отправлена. Мы свяжемся с вами в ближайшее время.")
       setCompanyName("")
       setCorporateEmail("")
+      setIsEmailInvalid(false)
       setCorporatePhone("")
+      setManagerName("")
     } catch (error) {
-      console.error("Не удалось отправить данные формы", error)
+      console.error("Failed to submit form data", error)
       setSubmitStatus("error")
-      setSubmitMessage("Не удалось отправить заявку. Попробуйте повторить попытку позже.")
+      setSubmitMessage("Не удалось отправить заявку. Попробуйте повторить позже.")
     } finally {
       setIsSubmitting(false)
     }
   }
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -112,6 +173,16 @@ export function ConsultationForm() {
 
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
+              <input
+                type="text"
+                name="Name"
+                tabIndex={-1}
+                autoComplete="off"
+                value={managerName}
+                onChange={(e) => setManagerName(e.target.value)}
+                aria-hidden="true"
+                style={{ position: "absolute", left: "-10000px", top: "auto", width: "1px", height: "1px", overflow: "hidden" }}
+              />
               {/* Название компании */}
               <div className="space-y-2">
                 <Label htmlFor="company-name" className="text-base font-medium text-foreground">
@@ -123,7 +194,6 @@ export function ConsultationForm() {
                   placeholder="ООО «Пример»"
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
-                  required
                   className="h-12 text-base mt-4"
                 />
               </div>
@@ -138,9 +208,12 @@ export function ConsultationForm() {
                   type="email"
                   placeholder="info@company.ru"
                   value={corporateEmail}
-                  onChange={(e) => setCorporateEmail(e.target.value)}
-                  required
-                  className="h-12 text-base mt-4"
+                  onChange={handleEmailChange}
+                  pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                  inputMode="email"
+                  autoComplete="email"
+                  aria-invalid={isEmailInvalid}
+                  className={`h-12 text-base mt-4 ${isEmailInvalid ? "border-red-500 focus-visible:ring-red-500" : ""}`}
                 />
               </div>
 
@@ -160,7 +233,8 @@ export function ConsultationForm() {
                     placeholder="(000) 000-00-00"
                     value={corporatePhone}
                     onChange={handlePhoneChange}
-                    required
+                    inputMode="tel"
+                    autoComplete="tel"
                     className="h-12 text-base pl-16"
                   />
                 </div>
